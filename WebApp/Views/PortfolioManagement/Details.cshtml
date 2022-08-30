@@ -1,0 +1,62 @@
+﻿@model StockDesk.WebApp.ViewModels.PortfolioManagementDetailsViewModel
+@{
+    ViewData["Title"] = "Planning Details";
+}
+
+<h3 id="PageTitle">Portfolio Management - details</h3>
+
+<table class="table">
+    <tbody>
+        <tr>
+            <td width="150">Date :</td>
+            <td><b>@Model.Date.ToString("dd-MM-yyyy")</b></td>
+        </tr>
+        <tr>
+            <td width="150">Status :</td>
+            <td id="JobStatus"><b>@Model.Trading.Status</b></td>
+        </tr>
+        <tr>
+            <td width="150">Start time :</td>
+            <td><b>@Model.Trading.StartTime.ToString("HH:mm")</b></td>
+        </tr>
+        <tr>
+            <td width="150">End time :</td>
+            <td><b>@Model.Trading.EndTime.ToString("HH:mm")</b></td>
+        </tr>
+        <tr>
+            <td width="150">Description :</td>
+            <td><b>@Model.Trading.Description</b></td>
+        </tr>
+        <tr>
+            <td width="150">Stock :</td>
+            <td><b><a href='@(Url.Action("Details", "StockManagement", new { ticker = Model.Trading.Stock.Ticker }))'>@Model.Trading.Stock.CompanyName @Model.Trading.Stock.Industry [@Model.Trading.Stock.Ticker]</a></b></td>
+        </tr>
+        <tr>
+            <td width="150">Owner :</td>
+            <td><b><a href='@(Url.Action("Details", "ClientManagement", new { id = Model.Trading.Client.ClientId }))'>@Model.Trading.Client.Name [@Model.Trading.Client.TelephoneNumber]</a></b></td>
+        </tr>
+        @if (Model.Trading.Status != "Planned")
+        {
+            <tr>
+                <td width="150">Actual Start time :</td>
+                <td><b>@Model.Trading.ActualStartTime</b></td>
+            </tr>
+            <tr>
+                <td width="150">Actual End time :</td>
+                <td><b>@Model.Trading.ActualEndTime</b></td>
+            </tr>
+            <tr>
+                <td width="150">Fund manager notes :</td>
+                <td><b>@Model.Trading.Notes</b></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<span><a id="BackButton" asp-action="Index" asp-controller="PortfolioManagement" asp-route-planningDate="@Model.Date.ToString("yyyy-MM-dd")" class="btn btn-default">Back</a></span>
+@if (Model.Trading.Status != "Completed")
+{
+    <span><a id="CompleteButton" asp-action="Finish" asp-controller="PortfolioManagement" asp-route-planningDate="@Model.Date.ToString("yyyy-MM-dd")" asp-route-jobId="@Model.Trading.Id" class="btn btn-default">Complete</a></span>
+}
+
+
+

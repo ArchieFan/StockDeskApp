@@ -1,0 +1,35 @@
+﻿@model StockDesk.WebApp.ViewModels.StockManagementDetailsViewModel
+@{
+    ViewData["Title"] = "Stock Details";
+}
+
+<h3 id="PageTitle">Stock Management - details</h3>
+
+<table class="table">
+    <tbody>
+        <tr>
+            <td width="150">Ticker Symbol :</td>
+            <td><b>@Model.Stock.Ticker</b></td>
+        </tr>
+        <tr>
+            <td width="150">Company Name :</td>
+            <td><b>@Model.Stock.CompanyName</b></td>
+        </tr>
+        <tr>
+            <td width="150">Industry :</td>
+            <td><b>@Model.Stock.Industry</b></td>
+        </tr>
+        <tr>
+            <td width="150">Market Cap :</td>
+            <td><b>@Model.Stock.MarketCap</b></td>
+        </tr>
+        <tr>
+            <td width="150">Owner :</td>
+            <td><b><a href='@(Url.Action("Details", "ClientManagement", new { id = Model.Stock.OwnerId }))'>@Model.Owner</a></b></td>
+        </tr>
+    </tbody>
+</table>
+<span><a id="BackButton" asp-action="Index" asp-controller="StockManagement" class="btn btn-default">Back</a></span>
+
+
+

@@ -1,0 +1,44 @@
+﻿@model StockDesk.WebApp.ViewModels.ClientManagementDetailsViewModel
+@{
+    ViewData["Title"] = "Client Details";
+}
+<h3 id="PageTitle">Client Management - details</h3>
+
+<table class="table">
+    <tbody>
+        <tr>
+            <td width="150">Name :</td>
+            <td><b>@Model.Client.Name</b></td>
+        </tr>
+        <tr>
+            <td width="150">Address :</td>
+            <td><b>@Model.Client.Address</b></td>
+        </tr>
+        <tr>
+            <td width="150">City :</td>
+            <td><b>@Model.Client.City</b></td>
+        </tr>
+        <tr>
+            <td width="150">Postalcode :</td>
+            <td><b>@Model.Client.PostalCode</b></td>
+        </tr>
+        <tr>
+            <td width="150">Telephonenumber :</td>
+            <td><b>@Model.Client.TelephoneNumber</b></td>
+        </tr>
+        <tr>
+            <td width="150">Emailaddress :</td>
+            <td><b>@Model.Client.EmailAddress</b></td>
+        </tr>
+        @if (Model.Client.LoyaltyLevel.HasValue)
+        {
+            string imagePath = $"/images/{Model.Client.LoyaltyLevel}.png";
+            <tr>
+                <td width="150">LoyaltyLevel :</td>
+                <td><img src="@imagePath" /></td>
+            </tr>        
+        }
+    </tbody>
+</table>
+<span><a id="BackButton" asp-action="Index" asp-controller="ClientManagement" class="btn btn-default">Back</a></span>
+

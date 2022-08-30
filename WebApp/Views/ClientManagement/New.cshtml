@@ -1,0 +1,45 @@
+﻿@model StockDesk.WebApp.ViewModels.ClientManagementNewViewModel
+@{
+    ViewData["Title"] = "Register Client";
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+
+<h3 id="PageTitle">Client Management - register client</h3>
+
+<form asp-controller="ClientManagement" asp-action="Register" method="post">
+    <div class="form-group">
+        <label asp-for="Client.Name"></label>
+        <input asp-for="Client.Name" type="text" class="form-control" />
+        <span asp-validation-for="Client.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Client.Address"></label>
+        <input asp-for="Client.Address" type="text" class="form-control" />
+        <span asp-validation-for="Client.Address" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Client.PostalCode"></label>
+        <input asp-for="Client.PostalCode" type="text" class="form-control" />
+        <span asp-validation-for="Client.PostalCode" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Client.City"></label>
+        <input asp-for="Client.City" type="text" class="form-control" />
+        <span asp-validation-for="Client.City" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Client.TelephoneNumber"></label>
+        <input asp-for="Client.TelephoneNumber" type="text" class="form-control" />
+        <span asp-validation-for="Client.TelephoneNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Client.EmailAddress"></label>
+        <input asp-for="Client.EmailAddress" type="text" class="form-control" />
+        <span asp-validation-for="Client.EmailAddress" class="text-danger"></span>
+    </div>
+    <span><button id="SubmitButton" type="submit" class="btn btn-default">Register</button></span>
+    <span><a id="CancelButton" asp-action="Index" asp-controller="ClientManagement" class="btn btn-default">Cancel</a></span>
+</form>

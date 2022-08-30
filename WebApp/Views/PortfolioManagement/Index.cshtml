@@ -1,0 +1,41 @@
+﻿@model StockDesk.WebApp.ViewModels.PortfolioManagementViewModel
+@{
+    ViewData["Title"] = "Portfolio Management";
+}
+<h3 id="PageTitle">Portfolio Management - overview</h3>
+
+<div style="margin-top: 10px; margin-bottom: 10px;">
+    <a asp-action="Index" asp-controller="PortfolioManagement" asp-route-planningDate="@Model.Date.AddDays(-1).ToString("yyyy-MM-dd")" class="btn btn-default"><</a>
+    <span class="text-primary"><b>@Model.Date.ToString("dd-MM-yyyy")</b></span>
+    <a asp-action="Index" asp-controller="PortfolioManagement" asp-route-planningDate="@Model.Date.AddDays(1).ToString("yyyy-MM-dd")" class="btn btn-default">></a>
+    <a asp-action="Index" asp-controller="PortfolioManagement" asp-route-planningDate="@DateTime.Now.ToString("yyyy-MM-dd")" class="btn btn-default">Today</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Status</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Stock</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var job in Model.Tradings)
+        {
+            <tr class="clickable @(job.Status == "Completed" ? "completedjob" : "")" onclick="location.href = '@(Url.Action("Details", "PortfolioManagement", new { planningDate = Model.Date.ToString("yyyy-MM-dd"), jobId = job.Id }))'">
+                <td>@job.Status</td>
+                <td>@job.StartTime.ToString("HH:mm")</td>
+                <td>@job.EndTime.ToString("HH:mm")</td>
+                <td>@job.Stock.CompanyName @job.Stock.Industry [@job.Stock.Ticker]</td>
+                <td>@job.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if(Model.Date.Date >= DateTime.Now.Date)
+{
+    <a id="RegisterTradingButton" asp-action="New" asp-controller="PortfolioManagement" asp-route-planningDate="@Model.Date.ToString("yyyy-MM-dd")" class="btn btn-default">Schedule Trading</a>
+}
+
