@@ -1,0 +1,13 @@
+global using StockDesk.ClientManagementAPI.Commands;
+global using StockDesk.ClientManagementAPI.Events;
+global using StockDesk.ClientManagementAPI.Model;
+global using StockDesk.ClientManagementAPI.DataAccess;
+global using StockDesk.ClientManagementAPI.Mappers;
+global using StockDesk.Infrastructure.Messaging;
+global using StockDesk.Infrastructure.Messaging.Configuration;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Infrastructure;
+global using Serilog;
+global using Polly;
+global using Microsoft.OpenApi.Models;
+global using Microsoft.AspNetCore.Mvc;

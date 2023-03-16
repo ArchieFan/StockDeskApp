@@ -1,0 +1,143 @@
+version: '3'
+services:
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    volumes:
+      - rabbitmqdata:/var/lib/rabbitmq
+      - "./rabbitmq:/etc/stockdesk/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      - RABBITMQ_CONFIG_FILE=/etc/stockdesk/rabbitmq.conf
+      
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver
+    volumes:
+      - sqlserverdata:/var/opt/mssql 
+    ports:
+      - "1434:1433"
+    environment:
+      - ACCEPT_EULA=Y 
+      - MSSQL_PID=Developer
+      - SA_PASSWORD=8jkGh47hnDw89Haq8LN2
+
+  mailserver:
+    image: maildev/maildev:1.1.0
+    container_name: mailserver
+    ports:
+      - "25:25"
+      - "4000:80"
+
+  logserver:
+    image: datalust/seq:latest
+    container_name: logserver
+    ports:
+      - "5341:80"
+    environment:
+      - ACCEPT_EULA=Y 
+
+  stockmanagementapi:
+    image: stockdesk/stockmanagementapi:1.0
+    build: StockManagementAPI
+    depends_on:
+      - rabbitmq
+      - sqlserver
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+
+  clientmanagementapi:
+    image: stockdesk/clientmanagementapi:1.0
+    build: ClientManagementAPI
+    depends_on:
+      - rabbitmq
+      - sqlserver
+    ports:
+      - "5100:5100"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+
+  portfoliomanagementapi:
+    image: stockdesk/portfoliomanagementapi:1.0
+    build: PortfolioManagementAPI
+    depends_on:
+      - rabbitmq
+      - sqlserver
+    ports:
+      - "5200:5200"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+
+  auditlogservice:
+    image: stockdesk/auditlogservice:1.0
+    build: AuditlogService
+    container_name: auditlogservice
+    depends_on:
+      - rabbitmq
+    environment:
+      - DOTNET_ENVIRONMENT=Production
+
+  invoiceservice:
+    image: stockdesk/invoiceservice:1.0
+    build: InvoiceService
+    container_name: invoiceservice
+    depends_on:
+      - rabbitmq
+      - sqlserver
+      - mailserver
+    environment:
+      - DOTNET_ENVIRONMENT=Production
+
+  notificationservice:
+    image: stockdesk/notificationservice:1.0
+    build: NotificationService
+    container_name: notificationservice
+    depends_on:
+      - rabbitmq
+      - sqlserver
+      - mailserver
+    environment:
+      - DOTNET_ENVIRONMENT=Production
+
+  timeservice:
+    image: stockdesk/timeservice:1.0
+    build: TimeService
+    container_name: timeservice
+    depends_on:
+      - rabbitmq
+    environment:
+      - DOTNET_ENVIRONMENT=Production
+
+  portfoliomanagementeventhandler:
+    image: stockdesk/portfoliomanagementeventhandler:1.0
+    build: PortfolioManagementEventHandler
+    container_name: portfoliomanagementeventhandler
+    depends_on:
+      - rabbitmq
+      - sqlserver
+    environment:
+      - DOTNET_ENVIRONMENT=Production
+
+  webapp:
+    image: stockdesk/webapp:1.0
+    build: WebApp
+    container_name: webapp
+    depends_on:
+      - clientmanagementapi
+      - stockmanagementapi
+      - portfoliomanagementapi
+    ports:
+      - "7000:7000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+
+volumes:
+  sqlserverdata:
+    external: true    
+  rabbitmqdata:
+    external: true

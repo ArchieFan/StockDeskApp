@@ -1,0 +1,30 @@
+﻿@model StockDesk.WebApp.ViewModels.StockManagementViewModel
+@{
+    ViewData["Title"] = "Stocks Overview";
+}
+<h3 id="PageTitle">Stock Management - overview</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ticker Symbol</th>
+            <th>Company Name</th>
+            <th>Industry</th>
+            <th>Market Cap</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var stock in Model.Stocks)
+        {
+            <tr class="clickable" onclick="location.href = '@(Url.Action("Details", "StockManagement", new { ticker = stock.Ticker }))'">
+                <td>@stock.Ticker</td>
+                <td>@stock.CompanyName</td>
+                <td>@stock.Industry</td>
+                <td>@stock.MarketCap</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a id="RegisterStockButton" asp-action="New" asp-controller="StockManagement" class="btn btn-default">Register stock</a>
+
+

@@ -1,0 +1,30 @@
+﻿@model StockDesk.WebApp.ViewModels.ClientManagementViewModel
+@{
+    ViewData["Title"] = "Clients Overview";
+}
+<h3 id="PageTitle">Client Management - overview</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Emailaddress</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var client in Model.Clients)
+        {
+            <tr class="clickable" onclick="location.href = '@(Url.Action("Details", "ClientManagement", new { id = client.ClientId }))'">
+                <td>@client.Name</td>
+                <td>@client.Address</td>
+                <td>@client.City</td>
+                <td>@client.EmailAddress</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a id="RegisterClientButton" asp-action="New" asp-controller="ClientManagement" class="btn btn-default">Register client</a>
+
+

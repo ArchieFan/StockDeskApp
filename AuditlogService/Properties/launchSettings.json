@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "AuditlogService": {
+      "commandName": "Project",
+      "commandLineArgs": "damn",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

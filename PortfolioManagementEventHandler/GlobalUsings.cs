@@ -1,0 +1,13 @@
+global using StockDesk.PortfolioManagementEventHandler;
+global using StockDesk.PortfolioManagementEventHandler.Events;
+global using StockDesk.PortfolioManagementEventHandler.Model;
+global using StockDesk.Infrastructure.Messaging;
+global using StockDesk.Infrastructure.Messaging.Configuration;
+global using StockDesk.PortfolioManagementEventHandler.DataAccess;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Hosting;
+global using Polly;
+global using Serilog;
+global using Newtonsoft.Json.Linq;
